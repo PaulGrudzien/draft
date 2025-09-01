@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tirage au sort — 24 équipes / 6 poules</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand">
+        <span class="brand-badge">DRAFT</span>
+        <h1>Tirage des poules</h1>
+        <p class="subtitle">24 équipes · 6 poules · 4 équipes par poule</p>
+      </div>
+      <div class="controls">
+        <button id="toggleDraw" class="btn primary">
+          <span class="icon" aria-hidden="true">▶</span>
+          <span class="label">Lancer l'animation</span>
+        </button>
+        <button id="stepOnce" class="btn ghost" title="Tirer une seule équipe">
+          Tirer 1 équipe
+        </button>
+        <button id="reset" class="btn ghost" title="Réinitialiser le tirage">
+          Réinitialiser
+        </button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="pools" aria-live="polite">
+        <!-- 6 pool tables will be injected by JS -->
+      </section>
+
+      <aside class="sidebar">
+        <div class="now-drawing card">
+          <h2>À l'écran</h2>
+          <div class="reveal">
+            <div class="team-name" id="revealTeam">—</div>
+            <div class="to-pool" id="revealPool">—</div>
+          </div>
+        </div>
+
+        <div class="teams-list card">
+          <div class="teams-list-header">
+            <h2>Liste des équipes</h2>
+            <span class="legend">
+              <span class="dot assigned"></span> = attribuée
+            </span>
+          </div>
+          <div class="table-wrapper">
+            <table id="teamsTable">
+              <thead>
+                <tr>
+                  <th>Coach</th>
+                  <th>Équipe</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- rows injected by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer class="site-footer">
+      <p>Tirage inspiré du style des grandes ligues (NHL · NBA · NFL · MLB).</p>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
