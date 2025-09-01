@@ -186,29 +186,46 @@ function pickNext(){
 }
 
 // --- Animation ---
-function startSpin(finalName, callback){
-  // Fait défiler des noms rapidement puis s'arrête sur finalName
-  const revealTeam = qs('#revealTeam');
-  const revealPool = qs('#revealPool');
-  let t = 0;
-  const spinNames = state.order
-    .map(id => state.teams[id].team)
-    .filter(n => n !== finalName); // éviter de retomber trop souvent dessus
+function startSpin(finalTeam, callback) {
+  const reel = qs('#reel');
+  reel.innerHTML = ''; // reset
 
-  clearInterval(state.spinTimer);
-  state.spinTimer = setInterval(()=>{
-    const name = spinNames[Math.floor(Math.random()*spinNames.length)] || finalName;
-    revealTeam.textContent = name;
-    t += 60;
-  }, 60);
+  // Construire un mélange de noms qui va défiler
+  const spinNames = [];
+  for (let i = 0; i < 20; i++) {
+    const rand = state.teams[Math.floor(Math.random() * state.teams.length)].team;
+    spinNames.push(rand);
+  }
+  // on s'assure que le dernier est le bon
+  spinNames.push(finalTeam);
 
-  // durée de spin ~1.2s puis callback
-  setTimeout(()=>{
-    clearInterval(state.spinTimer);
-    revealTeam.textContent = finalName;
+  // Injecter dans le DOM
+  spinNames.forEach(name => {
+    const span = document.createElement('span');
+    span.textContent = name;
+    reel.appendChild(span);
+  });
+
+  // Calculer la translation finale
+  const itemHeight = 48; // ~3em (ajuste selon ta CSS réelle)
+  const finalIndex = spinNames.length - 1;
+  const offset = -(finalIndex * itemHeight);
+
+  // Forcer reflow avant d’animer
+  reel.style.transition = 'none';
+  reel.style.transform = 'translateY(0)';
+  void reel.offsetHeight; // reflow hack
+
+  // Lancer l’animation
+  reel.style.transition = 'transform 2.5s cubic-bezier(.1, .9, .3, 1.05)';
+  reel.style.transform = `translateY(${offset}px)`;
+
+  // callback après l’arrêt
+  setTimeout(() => {
     callback();
-  }, 1200 + Math.random()*400);
+  }, 2600);
 }
+
 
 function doOneDraw({ animate = true } = {}){
   const pick = pickNext();

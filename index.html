@@ -13,18 +13,6 @@
         <h1>Tirage des poules</h1>
         <p class="subtitle">24 équipes · 6 poules · 4 équipes par poule</p>
       </div>
-      <div class="controls">
-        <button id="toggleDraw" class="btn primary">
-          <span class="icon" aria-hidden="true">▶</span>
-          <span class="label">Lancer l'animation</span>
-        </button>
-        <button id="stepOnce" class="btn ghost" title="Tirer une seule équipe">
-          Tirer 1 équipe
-        </button>
-        <button id="reset" class="btn ghost" title="Réinitialiser le tirage">
-          Réinitialiser
-        </button>
-      </div>
     </header>
 
     <main class="layout">
@@ -34,11 +22,24 @@
 
       <aside class="sidebar">
         <div class="now-drawing card">
-          <h2>À l'écran</h2>
-          <div class="reveal">
-            <div class="team-name" id="revealTeam">—</div>
-            <div class="to-pool" id="revealPool">—</div>
+          <div class="controls">
+            <button id="toggleDraw" class="btn primary">
+              <span class="icon" aria-hidden="true">▶</span>
+              <span class="label">Lancer l'animation</span>
+            </button>
+            <button id="stepOnce" class="btn ghost" title="Tirer une seule équipe">
+              Equipe suivante
+            </button>
+            <button id="reset" class="btn ghost" title="Réinitialiser le tirage">
+              Réinitialiser
+            </button>
           </div>
+          <div class="reel-wrapper">
+            <div class="reel" id="reel">
+              <!-- JS injectera les noms ici -->
+            </div>
+          </div>
+          <div class="to-pool" id="revealPool">—</div>
         </div>
 
         <div class="teams-list card">
