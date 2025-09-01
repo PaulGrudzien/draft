@@ -33,30 +33,30 @@ function qs(sel, el=document){ return el.querySelector(sel); }
 function qsa(sel, el=document){ return Array.from(el.querySelectorAll(sel)); }
 
 // --- Construction des données de base ---
-const teams = [["c1", "t1"],
-               ["c2", "t2"],
-               ["c3", "t3"],
-               ["c4", "t4"],
-               ["c5", "t5"],
-               ["c6", "t6"],
-               ["c7", "t7"],
-               ["c8", "t8"],
-               ["c9", "t9"],
-               ["c10", "t10"],
-               ["c11", "t11"],
-               ["c12", "t12"],
-               ["c13", "t13"],
-               ["c14", "t14"],
-               ["c15", "t15"],
-               ["c16", "t16"],
-               ["c17", "t17"],
-               ["c18", "t18"],
-               ["c19", "t19"],
-               ["c20", "t20"],
-               ["c21", "t21"],
-               ["c22", "t22"],
-               ["c23", "t23"],
-               ["c24", "t24"]]
+const teams = [["Alpha", "Ogres"],
+               ["Cédric", "Orcs"],
+               ["Chris TBZ", "Nurgle"],
+               ["El Nabo", "Lizardmen"],
+               ["Grunnlock", "Vampire"],
+               ["Hellmarauder", "Underworld_Denizens"],
+               ["Looping", "Skavens"],
+               ["Mithrandil", "Necromantic_Horror"],
+               ["Naestra", "Imperial_Retainer"],
+               ["Nathan", "Norse"],
+               ["NicoB", "Vampire"],
+               ["Ruth le Blanc", "Dwarf"],
+               ["Schtroumpf", "Wood_Elves"],
+               ["Skarlan", "Vampire"],
+               ["Spiff04", "Skavens"],
+               ["Syrseth", "Khorne"],
+               ["Veltaz", "High_Elves"],
+               ["WAX", "Dark_Elves"],
+               ["coach n°19", "?"],
+               ["coach n°20", "?"],
+               ["coach n°21", "?"],
+               ["coach n°22", "?"],
+               ["coach n°23", "?"],
+               ["coach n°24", "?"]]
 function initTeams(){
   state.teams = Array.from({ length: 24 }, (_, i) => ({
     id: i,
@@ -118,7 +118,7 @@ function renderTeamsList(){
 
 // --- Mise à jour UI ---
 function setNowDrawing(team, poolIndex){
-  qs('#revealTeam').textContent = team ? team.team : '—';
+  qs('#revealTeam').textContent = team ? team.coach : '—';
   qs('#revealPool').textContent = team ? `attribuée à la poule ${poolIndex+1}` : '—';
 }
 function markAssigned(teamId, poolIndex, round){
@@ -186,46 +186,29 @@ function pickNext(){
 }
 
 // --- Animation ---
-function startSpin(finalTeam, callback) {
-  const reel = qs('#reel');
-  reel.innerHTML = ''; // reset
+function startSpin(finalName, callback){
+  // Fait défiler des noms rapidement puis s'arrête sur finalName
+  const revealTeam = qs('#revealTeam');
+  const revealPool = qs('#revealPool');
+  let t = 0;
+  const spinNames = state.order
+    .map(id => state.teams[id].coach)
+    .filter(n => n !== finalName); // éviter de retomber trop souvent dessus
 
-  // Construire un mélange de noms qui va défiler
-  const spinNames = [];
-  for (let i = 0; i < 20; i++) {
-    const rand = state.teams[Math.floor(Math.random() * state.teams.length)].team;
-    spinNames.push(rand);
-  }
-  // on s'assure que le dernier est le bon
-  spinNames.push(finalTeam);
+  clearInterval(state.spinTimer);
+  state.spinTimer = setInterval(()=>{
+    const name = spinNames[Math.floor(Math.random()*spinNames.length)] || finalName;
+    revealTeam.textContent = name;
+    t += 60;
+  }, 60);
 
-  // Injecter dans le DOM
-  spinNames.forEach(name => {
-    const span = document.createElement('span');
-    span.textContent = name;
-    reel.appendChild(span);
-  });
-
-  // Calculer la translation finale
-  const itemHeight = 48; // ~3em (ajuste selon ta CSS réelle)
-  const finalIndex = spinNames.length - 1;
-  const offset = -(finalIndex * itemHeight);
-
-  // Forcer reflow avant d’animer
-  reel.style.transition = 'none';
-  reel.style.transform = 'translateY(0)';
-  void reel.offsetHeight; // reflow hack
-
-  // Lancer l’animation
-  reel.style.transition = 'transform 2.5s cubic-bezier(.1, .9, .3, 1.05)';
-  reel.style.transform = `translateY(${offset}px)`;
-
-  // callback après l’arrêt
-  setTimeout(() => {
+  // durée de spin ~1.2s puis callback
+  setTimeout(()=>{
+    clearInterval(state.spinTimer);
+    revealTeam.textContent = finalName;
     callback();
-  }, 2600);
+  }, 1200 + Math.random()*400);
 }
-
 
 function doOneDraw({ animate = true } = {}){
   const pick = pickNext();
