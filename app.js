@@ -51,12 +51,12 @@ const teams = [["Alpha", "Ogres"],
                ["Schtroumpf", "Wood_Elves"],
                ["Skarlan", "Vampire"],
                ["Spiff04", "Skavens"],
-               ["Syrseth", "Khorne"],
+               ["Syrseth", "Khorne"],,
+               ["TeamBalèZe", "Old_World_Alliance"]]
                ["Thibolive", "Dark_Elves"],
                ["Veltaz", "High_Elves"],
                ["VenomNerva", "Orcs"],
-               ["WAX 🥈", "Dark_Elves"],
-               ["coach n°24", "?"]]
+               ["WAX 🥈", "Dark_Elves"]
 function initTeams(){
   state.teams = Array.from({ length: 24 }, (_, i) => ({
     id: i,
