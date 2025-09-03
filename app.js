@@ -34,7 +34,9 @@ function qsa(sel, el=document){ return Array.from(el.querySelectorAll(sel)); }
 
 // --- Construction des données de base ---
 const teams = [["Alpha", "Ogres"],
+               ["Azhagmorglum", "Orcs"],
                ["Cédric", "Orcs"],
+               ["Chakabon", "Black_Orcs"],
                ["Chris TBZ 🥉", "Nurgle"],
                ["El Nabo", "Lizardmen"],
                ["Grunnlock", "Vampire"],
@@ -44,18 +46,16 @@ const teams = [["Alpha", "Ogres"],
                ["Naestra", "Imperial_Retainer"],
                ["Nathan", "Norse"],
                ["NicoB 🥇", "Vampire"],
+               ["Poulidor", "Human"],
                ["Ruth le Blanc", "Dwarf"],
                ["Schtroumpf", "Wood_Elves"],
                ["Skarlan", "Vampire"],
                ["Spiff04", "Skavens"],
                ["Syrseth", "Khorne"],
+               ["Thibolive", "Dark_Elves"],
                ["Veltaz", "High_Elves"],
+               ["VenomNerva", "Orcs"],
                ["WAX 🥈", "Dark_Elves"],
-               ["coach n°19", "?"],
-               ["coach n°20", "?"],
-               ["coach n°21", "?"],
-               ["coach n°22", "?"],
-               ["coach n°23", "?"],
                ["coach n°24", "?"]]
 function initTeams(){
   state.teams = Array.from({ length: 24 }, (_, i) => ({
